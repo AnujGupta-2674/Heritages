@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
                 req.flash("error", "Something went wrong. Please try again.");
                 return res.redirect("/signup");
             } else {
-                req.flash("success", "Welcome to world heritages");
+                req.flash("success", "Welcome to World heritages");
                 res.redirect("/wonders");
             }
 
@@ -50,7 +50,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login", redirectUrl, passport.authenticate("local", { failureFlash: true, failureRedirect: "/signup" }), async (req, res) => {
     let redirect = res.locals.url || "/wonders";
-    req.flash("success", "Welcome user to 7 wonders");
+    req.flash("success", "Welcome user to World Heritages");
     res.redirect(redirect);
 });
 
@@ -59,7 +59,7 @@ router.get("/logout", async (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            req.flash("success", "You are logged out from 7 wonders");
+            req.flash("success", "You are logged out from World Heritages");
             res.redirect("/wonders");
         }
     });
