@@ -1,0 +1,34 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <div class="container">
+        <% if (success && success.length) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    <%= success %>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+                <div class="row">
+                    <% for(let wonder of allWonder) { %>
+                        <div class="col-md-4 mb-4 mt-3">
+                            <a href="/wonders/<%= wonder._id %>/show" class="text-decoration-none">
+                                <div class="card box h-100">
+                                    <img src="<%= wonder.image %>" class="card-img-top" alt="<%= wonder.name %>">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= wonder.name %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= wonder.title %>
+                                        </p>
+                                        <p class="card-text"><small class="text-muted">
+                                                <%= wonder.country %>
+                                            </small></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
+                </div>
+    </div>

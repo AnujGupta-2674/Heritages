@@ -1,0 +1,163 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <div class="container my-5">
+        <% if (success && success.length) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    <%= success %>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+                <% if (error && error.length) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>
+                            <%= error %>
+                        </strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% } %>
+
+                        <h2 class="text-center mb-4">
+                            <%= wonder.name %>
+                        </h2>
+
+                        <div class="text-center mb-4">
+                            <h3 class="d-inline-block bg-light text-dark rounded-pill px-3 py-1">
+                                Listed By: <%= wonder.owner.username %>
+                            </h3>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card shadow-lg mb-5">
+                                    <img src="<%= wonder.image %>" class="card-img-top" alt="<%= wonder.name %>">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= wonder.title %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= wonder.description %>
+                                        </p>
+                                        <p class="card-text"><strong>Country:</strong>
+                                            <%= wonder.country %>
+                                        </p>
+                                    </div>
+                                    <% if (currUser) { %>
+                                        <% if (currUser._id.equals(wonder.owner._id)) { %>
+                                            <div class="card-footer text-center">
+                                                <!-- <a href="/wonders" class="btn btn-primary">Back to List</a> -->
+                                                <a href="/wonders/<%= wonder._id %>/edit"
+                                                    class="btn btn-primary">Edit</a>
+                                            </div>
+                                            <% } %>
+                                                <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% if (currUser) { %>
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-lg-8">
+                                    <div class="card shadow-lg">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-3">Leave a Review</h4>
+                                            <form method="POST" action="/wonders/<%= wonder.id %>/reviews"
+                                                class="needs-validation" novalidate>
+                                                <div class="mb-3">
+                                                    <fieldset class="starability-slot">
+                                                        <input type="radio" id="no-rate" class="input-no-rate"
+                                                            name="rating" value="1" checked aria-label="No rating." />
+                                                        <input type="radio" id="first-rate1" name="review[rating]"
+                                                            value="1" />
+                                                        <label for="first-rate1" title="Terrible">1 star</label>
+                                                        <input type="radio" id="first-rate2" name="review[rating]"
+                                                            value="2" />
+                                                        <label for="first-rate2" title="Not good">2 stars</label>
+                                                        <input type="radio" id="first-rate3" name="review[rating]"
+                                                            value="3" />
+                                                        <label for="first-rate3" title="Average">3 stars</label>
+                                                        <input type="radio" id="first-rate4" name="review[rating]"
+                                                            value="4" />
+                                                        <label for="first-rate4" title="Very good">4 stars</label>
+                                                        <input type="radio" id="first-rate5" name="review[rating]"
+                                                            value="5" />
+                                                        <label for="first-rate5" title="Amazing">5 stars</label>
+                                                    </fieldset>
+
+                                                    <div class="valid-feedback">Rating Looks Good</div>
+                                                    <div class="invalid-feedback">Rating cannot be empty</div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="comment" class="form-label">Comments</label>
+                                                    <textarea name="review[comment]" id="comment" cols="30" rows="5"
+                                                        class="form-control" required></textarea>
+
+                                                    <div class="valid-feedback">Comments Look Good</div>
+                                                    <div class="invalid-feedback">Comment cannot be empty</div>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+
+                                <div class="row">
+                                    <% for (review of wonder.reviews) { %>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="card h-100 shadow-sm">
+                                                <div class="card-body">
+                                                    <!-- <h3>
+                                                        <%= review %>
+                                                    </h3> -->
+                                                    <h5 class="card-title">
+                                                        <%= review.author.username %>
+                                                    </h5>
+                                                    <p class="starability-result" data-rating="<%= review.rating %>">
+                                                    </p>
+                                                    <p class="card-text">
+                                                        <%= review.comment %>
+                                                    </p>
+                                                    <% if (currUser) { %>
+                                                        <% if (review.author._id.equals(currUser._id)) { %>
+                                                            <form
+                                                                action="/wonders/<%= wonder._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                                method="post">
+                                                                <button class="btn btn-dark">Delete Review</button>
+                                                            </form>
+                                                            <% } %>
+                                                                <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+    </div>
+
+    <script>
+        // JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation');
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+        })();
+    </script>

@@ -1,0 +1,52 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <div class="container mt-5">
+        <form action="/wonders/<%= wonder._id %>" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">Enter Name</label>
+                <input type="text" name="wonder[name]" class="form-control" id="name" placeholder="Gem name goes here"
+                    value="<%= wonder.name %>" required>
+                <div class="invalid-feedback">
+                    Please enter a gem name.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Enter Catchy Title</label>
+                <input type="text" name="wonder[title]" class="form-control" id="title" placeholder="Title goes here"
+                    value="<%= wonder.title %>" required>
+                <div class="invalid-feedback">
+                    Please enter a catchy title.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="link" class="form-label">Enter image URL</label>
+                <input type="url" name="wonder[image]" class="form-control" id="link" placeholder="URL goes here"
+                    value="<%= wonder.image %>" required>
+                <div class="invalid-feedback">
+                    Please enter a valid URL.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="desc" class="form-label">Enter Short and Catchy Description</label>
+                <textarea name="wonder[description]" class="form-control" id="desc" rows="5"
+                    required><%= wonder.description %></textarea>
+                <div class="invalid-feedback">
+                    Please enter a short and catchy description.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="country" class="form-label">Enter Country</label>
+                <input type="text" name="wonder[country]" class="form-control" id="country"
+                    placeholder="Country name goes here" value="<%= wonder.country %>" required>
+                <div class="invalid-feedback">
+                    Please enter the country name.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary offset-5 mb-2">Submit your Gem</button>
+        </form>
+    </div>

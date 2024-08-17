@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><i class="fa-solid fa-globe"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" aria-current="page" href="/wonders">Home</a>
+                <a class="nav-link" href="/wonders/new">Add New Gem </a>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <% if (!currUser) { %>
+                    <a class="nav-link" aria-current="page" href="/signup">SignUp</a>
+                    <a class="nav-link" href="/login">LogIn</a>
+                    <% } %>
+                        <% if (currUser) { %>
+                            <a class="nav-link" href="/logout">Logout</a>
+                            <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
